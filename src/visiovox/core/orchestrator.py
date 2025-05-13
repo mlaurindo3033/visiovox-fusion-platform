@@ -148,5 +148,39 @@ class Orchestrator:
 # Exemplo de uso (seria em um main.py ou similar)
 # if __name__ == '__main__':
 #     from visiovox.core.logger_setup import setup_logging
-#     setup_logging()
-#     ... (exemplo de uso comentado) 
+#     setup_logging() # Configura o logging conforme logging_config.yaml
+
+#     logger = logging.getLogger("visiovox.main_test") # Logger específico para este teste
+
+#     # Supõe que configs/default_config.yaml está configurado corretamente
+#     # e que os modelos e caminhos de saída existem ou podem ser criados.
+#     # Para um teste real, você precisaria de um modelo ONNX em models/face_detection/
+#     # e uma imagem de exemplo.
+
+#     try:
+#         logger.info("Initializing application components for Orchestrator test...")
+#         cfg_manager = ConfigManager() # Usa configs/default_config.yaml
+#         res_manager = ResourceManager(config_manager=cfg_manager)
+#         orchestrator = Orchestrator(config_manager=cfg_manager, resource_manager=res_manager)
+#         logger.info("Application components initialized.")
+
+#         # Crie um arquivo de imagem de exemplo em data/input/sample_image.png ou .jpg
+#         # por exemplo, 'data/input/sample_image.jpg'
+#         sample_image_path_relative = "data/input/sample_image.jpg" # Coloque uma imagem aqui!
+#         project_r = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+#         sample_image_path_absolute = os.path.join(project_r, sample_image_path_relative)
+        
+#         if not os.path.exists(sample_image_path_absolute):
+#             logger.error(f"SAMPLE IMAGE FOR TESTING NOT FOUND at {sample_image_path_absolute}")
+#             logger.error("Please create a sample image (e.g., data/input/sample_image.jpg) to run this test.")
+#         else:
+#             logger.info(f"Attempting to process image: {sample_image_path_absolute}")
+#             success = orchestrator.process_static_image(sample_image_path_absolute)
+#             logger.info(f"Orchestrator.process_static_image result: {success}")
+
+#     except ConfigError as e:
+#         logger.critical(f"Configuration error during test setup: {e}", exc_info=True)
+#     except ImportError as e:
+#         logger.critical(f"ImportError: {e}. Make sure all modules (MediaLoader, FaceDetector) are created.", exc_info=True)
+#     except Exception as e:
+#         logger.critical(f"An unexpected error occurred during Orchestrator test: {e}", exc_info=True)
