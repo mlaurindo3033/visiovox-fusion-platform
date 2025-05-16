@@ -1,0 +1,28 @@
+         4411 function calls (3291 primitive calls) in 0.005 seconds
+
+   Ordered by: cumulative time
+   List reduced from 135 to 20 due to restriction <20>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.005    0.005 D:\visiovox-fusion-platform\visomaster_modificado\app\processors\models_processor.py:237(load_model)
+        4    0.000    0.000    0.002    0.000 D:\visiovox-fusion-platform\visomaster_modificado\app\helpers\profiler.py:45(measure_time)
+        1    0.000    0.000    0.002    0.002 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\onnxruntime\capi\onnxruntime_inference_collection.py:404(__init__)
+        1    0.002    0.002    0.002    0.002 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\onnxruntime\capi\onnxruntime_inference_collection.py:482(_create_inference_session)
+        2    0.000    0.000    0.001    0.001 C:\Users\miche\.conda\envs\visomaster\lib\contextlib.py:139(__exit__)
+        7    0.000    0.000    0.001    0.000 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\torch\cuda\memory.py:173(memory_stats)
+        6    0.000    0.000    0.001    0.000 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\torch\cuda\memory.py:377(memory_allocated)
+        4    0.000    0.000    0.001    0.000 D:\visiovox-fusion-platform\visomaster_modificado\app\helpers\profiler.py:23(get_memory_usage)
+        3    0.000    0.000    0.001    0.000 {built-in method builtins.next}
+   1127/7    0.001    0.000    0.001    0.000 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\torch\cuda\memory.py:262(_recurse_add_to_result)
+        1    0.000    0.000    0.001    0.001 {method 'throw' of 'generator' objects}
+        1    0.000    0.000    0.001    0.001 D:\visiovox-fusion-platform\visomaster_modificado\app\helpers\profiler.py:196(log_gpu_memory_usage)
+        2    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\contextlib.py:130(__enter__)
+        4    0.000    0.000    0.000    0.000 {built-in method builtins.print}
+        3    0.000    0.000    0.000    0.000 {method '__exit__' of '_io._IOBase' objects}
+        3    0.000    0.000    0.000    0.000 {built-in method io.open}
+        1    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\traceback.py:181(format_exc)
+        1    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\traceback.py:124(format_exception)
+        7    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\torch\cuda\memory.py:278(memory_stats_as_nested_dict)
+        1    0.000    0.000    0.000    0.000 D:\visiovox-fusion-platform\visomaster_modificado\app\helpers\memory_manager.py:246(get_gpu_memory_usage)
+
+

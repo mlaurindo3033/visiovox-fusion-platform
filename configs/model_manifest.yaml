@@ -1,0 +1,121 @@
+face_swappers:
+  inswapper_128:
+    description: "InsightFace Swapper (128x128)"
+    model_type: "face_swapper"
+    download_url: "https://huggingface.co/facefusion/models-3.0.0/resolve/main/inswapper_128.onnx"
+    path_local_cache: "models/face_swappers/inswapper_128.onnx"
+    sha256_hash_expected: "A290273ED497312095DAC48CDEF20FEEC9D5208298223DD01288AB202B54BEA7"
+
+  simswap_256:
+    description: "SimSwap Face Swapper (256x256 input)"
+    model_type: "face_swapper"
+    download_url: "https://huggingface.co/facefusion/models-3.0.0/resolve/main/simswap_256.onnx"
+    path_local_cache: "models/face_swappers/simswap_256.onnx"
+    sha256_hash_expected: "5B6374B2FFAB838588D4F0C32DC7ED5BB8D99237D755A663ED02EE265A1714FB"
+
+  inswapper_128_fp16:
+    description: "InsightFace Swapper (128x128, FP16)"
+    model_type: "face_swapper"
+    path_local_cache: "models/face_swappers/inswapper_128.fp16.onnx"
+    sha256_hash_expected: "" # Adicione o hash se desejar checagem
+    precision: "fp16"
+    input_size_hw: [128, 128]
+
+face_enhancer:
+  gfpgan_1_4:
+    description: "GFPGAN v1.4 - High-fidelity Face Enhancer"
+    model_type: "face_enhancer"
+    download_url: "https://huggingface.co/facefusion/models-3.0.0/resolve/main/gfpgan_1.4.onnx"
+    path_local_cache: "models/face_enhancers/gfpgan_1_4.onnx"
+    sha256_hash_expected: "ACCC4757B26BDB89B32B4D3500D4F79C9DFF97C1DD7C7104BF9DCB95E3311385"
+    input_size_hw: [512, 512]
+
+  codeformer:
+    description: "CodeFormer - Robust Face Restoration and Enhancement"
+    model_type: "face_enhancer"
+    download_url: "https://huggingface.co/facefusion/models-3.0.0/resolve/main/codeformer.onnx"
+    path_local_cache: "models/face_enhancers/codeformer.onnx"
+    sha256_hash_expected: "21710E7AB61C82683576C428E9C1B6FE1ED419586B7B39E394C3449C294B550F"
+    input_size_hw: [512, 512]
+
+face_landmarker:
+  2dfan4:
+    description: "FAN 2DFAN4 - Face Landmarker 2D"
+    model_type: "face_landmarker"
+    download_url: "https://huggingface.co/facefusion/models-3.0.0/resolve/main/2dfan4.onnx"
+    path_local_cache: "models/face_landmarkers/2dfan4.onnx"
+    sha256_hash_expected: "678C6FA539D52335A31C980FEEFDF4A6E02D781D83DCE00AF8A894F114557285"
+    input_size_hw: [256, 256]
+
+  fan_68_5:
+    description: "FAN 68-point (version 5) - Face Landmarker"
+    model_type: "face_landmarker"
+    download_url: "https://huggingface.co/facefusion/models-3.0.0/resolve/main/fan_68_5.onnx"
+    path_local_cache: "models/face_landmarkers/fan_68_5.onnx"
+    sha256_hash_expected: "EA05F7D9D014AE1D9CDC6E9C72643D8F00D198B5DB3FDD384148DDFF499A613E"
+    input_size_hw: [256, 256]
+
+face_recogniser:
+  arcface_w600k_r50:
+    description: "ArcFace model (ResNet50 backbone, trained on W600k dataset) for face recognition and embedding extraction."
+    model_type: "face_recogniser"
+    download_url: "https://huggingface.co/facefusion/models-3.0.0/resolve/main/arcface_w600k_r50.onnx"
+    path_local_cache: "models/face_recognisers/arcface_w600k_r50.onnx"
+    sha256_hash_expected: "f1f79dc3b0b79a69f94799af1fffebff09fbd78fd96a275fd8f0cbbea23270d1"
+    input_size_hw: [112, 112] # [height, width]
+    input_name: "input"
+    output_name: "output"
+
+  simswap_arcface_visomaster:
+    description: "SimSwap ArcFace model from VisoMaster for face recognition and embedding extraction."
+    model_type: "face_recogniser"
+    path_local_cache: "models/face_recognisers/simswap_arcface_model.onnx"
+    sha256_hash_expected: "" # Deixar em branco por enquanto
+    input_size_hw: [112, 112] # [height, width] - Suposição padrão ArcFace
+    input_name: "input"       # Suposição padrão
+    output_name: "output"     # Suposição padrão
+
+# === Face Landmarkers ===
+face_landmarkers:
+  2dfan4_default_onnx: # Nome do modelo como usado no config ou código
+    description: "2D Facial Landmark detection model (2DFAN-4 variant). Outputs 68 landmarks."
+    model_type: "face_landmarker" # Tipo genérico do modelo
+    download_url: "https://huggingface.co/facefusion/models-3.0.0/resolve/main/2dfan4.onnx"
+    path_local_cache: "models/face_landmarkers/2dfan4.onnx"
+    sha256_hash_expected: "0932409606d55398208968a28209559b8179965ae389439401e74050059696ac"
+    input_size_hw: [256, 256] # [height, width]
+    input_name: "input" # Nome da camada de entrada do modelo ONNX
+    output_name: "output" # Nome da camada de saída do modelo ONNX (verificado com Netron)
+
+# === Face Recognisers ===
+face_recognisers:
+  arcface_w600k_r50:
+    description: "ArcFace model (ResNet50 backbone, trained on W600k dataset) for face recognition and embedding extraction."
+    model_type: "face_recogniser"
+    download_url: "https://huggingface.co/facefusion/models-3.0.0/resolve/main/arcface_w600k_r50.onnx"
+    path_local_cache: "models/face_recognisers/arcface_w600k_r50.onnx"
+    sha256_hash_expected: "f1f79dc3b0b79a69f94799af1fffebff09fbd78fd96a275fd8f0cbbea23270d1"
+    input_size_hw: [112, 112] # [height, width]
+    input_name: "input"
+    output_name: "output"
+
+# === Face Swappers ===
+# (Adicionar modelos de face swapper aqui no futuro)
+# Exemplo:
+# inswapper_128:
+#   description: "InsightFace Swapper model, 128x128 input."
+#   model_type: "face_swapper"
+#   download_url: "URL_PARA_INSWAPPER_128.ONNX"
+#   path_local_cache: "models/face_swappers/inswapper_128.onnx"
+#   sha256_hash_expected: "HASH_SHA256_DO_INSWAPPER"
+#   input_size_hw: [128, 128]
+#   input_names: ["target", "source"] # Exemplo, pode variar
+#   output_name: "output"
+
+
+# === Outros Tipos de Modelos (ex: Segmentação, Detecção de Objetos Gerais) ===
+# object_detectors:
+#   yolo_generic:
+#     description: "Generic YOLO object detector."
+#     model_type: "object_detector"
+#     # ... outros campos 

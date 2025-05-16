@@ -1,0 +1,57 @@
+[2025-05-15 12:46:03] Profiling data cleared
+[2025-05-15 12:46:03] MONITOR: RAM: 770.58MB | VRAM: 0.00MB / 12287.38MB
+[2025-05-15 12:46:04] GPU Memory [Antes de carregar modelo RetinaFace] - Allocated: 9.13MB, Reserved: 44.00MB
+[2025-05-15 12:46:04] PERF: Gerenciamento de cache para modelo RetinaFace - Tempo: 0.0000s | RAM delta: 0.01MB | VRAM delta: 0.00MB
+[2025-05-15 12:46:04] PERF: Carregamento efetivo do modelo RetinaFace - Tempo: 0.0949s | RAM delta: 27.48MB | VRAM delta: 0.00MB
+[2025-05-15 12:46:04] GPU Memory [Após carregar modelo RetinaFace] - Allocated: 9.13MB, Reserved: 44.00MB
+[2025-05-15 12:46:04] GPU Memory [Antes de carregar modelo Inswapper128ArcFace] - Allocated: 9.13MB, Reserved: 44.00MB
+[2025-05-15 12:46:04] PERF: Gerenciamento de cache para modelo Inswapper128ArcFace - Tempo: 0.0000s | RAM delta: 0.00MB | VRAM delta: 0.00MB
+[2025-05-15 12:46:04] PERF: Carregamento efetivo do modelo Inswapper128ArcFace - Tempo: 0.2083s | RAM delta: 75.78MB | VRAM delta: 0.00MB
+[2025-05-15 12:46:04] GPU Memory [Após carregar modelo Inswapper128ArcFace] - Allocated: 9.13MB, Reserved: 44.00MB
+[2025-05-15 12:46:04] PERF: Inicialização de ModelsProcessor - Tempo: 0.5703s | RAM delta: 545.21MB | VRAM delta: 9.12MB
+[2025-05-15 12:46:08] MONITOR: RAM: 1406.86MB | VRAM: 9.13MB / 12287.38MB
+[2025-05-15 12:46:13] MONITOR: RAM: 1452.36MB | VRAM: 9.13MB / 12287.38MB
+[2025-05-15 12:46:18] MONITOR: RAM: 1455.83MB | VRAM: 9.13MB / 12287.38MB
+[2025-05-15 12:46:19] GPU Memory [Antes de carregar modelo SimSwapArcFace] - Allocated: 9.13MB, Reserved: 24.00MB
+[2025-05-15 12:46:19] PERF: Gerenciamento de cache para modelo SimSwapArcFace - Tempo: 0.0000s | RAM delta: 0.01MB | VRAM delta: 0.00MB
+[2025-05-15 12:46:19] PERF: Carregamento efetivo do modelo SimSwapArcFace - Tempo: 0.4188s | RAM delta: 87.13MB | VRAM delta: 0.00MB
+[2025-05-15 12:46:20] GPU Memory [Após carregar modelo SimSwapArcFace] - Allocated: 9.13MB, Reserved: 24.00MB
+[2025-05-15 12:46:20] GPU Memory [Antes de carregar modelo GhostArcFace] - Allocated: 9.13MB, Reserved: 24.00MB
+[2025-05-15 12:46:20] PERF: Gerenciamento de cache para modelo GhostArcFace - Tempo: 0.0010s | RAM delta: 0.00MB | VRAM delta: 0.00MB
+[2025-05-15 12:46:20] PERF: Carregamento efetivo do modelo GhostArcFace - Tempo: 0.4475s | RAM delta: 93.78MB | VRAM delta: 0.00MB
+[2025-05-15 12:46:20] GPU Memory [Após carregar modelo GhostArcFace] - Allocated: 9.13MB, Reserved: 24.00MB
+[2025-05-15 12:46:20] GPU Memory [Antes de carregar modelo CSCSArcFace] - Allocated: 9.13MB, Reserved: 24.00MB
+[2025-05-15 12:46:20] PERF: Gerenciamento de cache para modelo CSCSArcFace - Tempo: 0.0000s | RAM delta: 0.00MB | VRAM delta: 0.00MB
+[2025-05-15 12:46:21] PERF: Carregamento efetivo do modelo CSCSArcFace - Tempo: 0.6986s | RAM delta: 104.15MB | VRAM delta: 0.00MB
+[2025-05-15 12:46:21] GPU Memory [Após carregar modelo CSCSArcFace] - Allocated: 9.13MB, Reserved: 24.00MB
+[2025-05-15 12:46:21] GPU Memory [Antes de carregar modelo CSCSIDArcFace] - Allocated: 9.13MB, Reserved: 24.00MB
+[2025-05-15 12:46:21] PERF: Gerenciamento de cache para modelo CSCSIDArcFace - Tempo: 0.0000s | RAM delta: 0.00MB | VRAM delta: 0.00MB
+[2025-05-15 12:46:22] PERF: Carregamento efetivo do modelo CSCSIDArcFace - Tempo: 0.6846s | RAM delta: 86.99MB | VRAM delta: 0.00MB
+[2025-05-15 12:46:22] GPU Memory [Após carregar modelo CSCSIDArcFace] - Allocated: 9.13MB, Reserved: 24.00MB
+[2025-05-15 12:46:24] MONITOR: RAM: 2607.02MB | VRAM: 17.25MB / 12287.38MB
+[2025-05-15 12:46:27] GPU Memory [Antes de carregar modelo Inswapper128] - Allocated: 25.36MB, Reserved: 56.00MB
+[2025-05-15 12:46:27] PERF: Gerenciamento de cache para modelo Inswapper128 - Tempo: 0.1245s | RAM delta: 0.00MB | VRAM delta: 0.00MB
+[2025-05-15 12:46:27] PERF: Carregamento efetivo do modelo Inswapper128 - Tempo: 0.2069s | RAM delta: 42.24MB | VRAM delta: 0.00MB
+[2025-05-15 12:46:27] GPU Memory [Após carregar modelo Inswapper128] - Allocated: 25.36MB, Reserved: 56.00MB
+[2025-05-15 12:46:29] MONITOR: RAM: 2968.40MB | VRAM: 17.25MB / 12287.38MB
+[2025-05-15 12:46:34] MONITOR: RAM: 2973.45MB | VRAM: 17.25MB / 12287.38MB
+[2025-05-15 12:46:39] MONITOR: RAM: 2973.63MB | VRAM: 17.25MB / 12287.38MB
+[2025-05-15 12:46:39] GPU Memory [Antes de carregar modelo YoloFace8n] - Allocated: 21.00MB, Reserved: 24.00MB
+[2025-05-15 12:46:39] PERF: Gerenciamento de cache para modelo YoloFace8n - Tempo: 0.1100s | RAM delta: 0.00MB | VRAM delta: 0.00MB
+[2025-05-15 12:46:39] PERF: Carregamento efetivo do modelo YoloFace8n - Tempo: 0.0660s | RAM delta: 15.39MB | VRAM delta: 0.00MB
+[2025-05-15 12:46:40] GPU Memory [Após carregar modelo YoloFace8n] - Allocated: 21.00MB, Reserved: 24.00MB
+[2025-05-15 12:46:44] MONITOR: RAM: 3046.54MB | VRAM: 17.25MB / 12287.38MB
+[2025-05-15 12:46:45] GPU Memory [Antes de carregar modelo FaceLandmark203] - Allocated: 30.72MB, Reserved: 64.00MB
+[2025-05-15 12:46:45] PERF: Gerenciamento de cache para modelo FaceLandmark203 - Tempo: 0.1245s | RAM delta: 0.00MB | VRAM delta: 0.00MB
+[2025-05-15 12:46:45] PERF: Carregamento efetivo do modelo FaceLandmark203 - Tempo: 0.2046s | RAM delta: 29.44MB | VRAM delta: 0.00MB
+[2025-05-15 12:46:45] GPU Memory [Após carregar modelo FaceLandmark203] - Allocated: 30.72MB, Reserved: 64.00MB
+[2025-05-15 12:46:49] MONITOR: RAM: 3097.69MB | VRAM: 17.25MB / 12287.38MB
+[2025-05-15 12:46:51] GPU Memory [Antes de carregar modelo FaceLandmark478] - Allocated: 30.72MB, Reserved: 64.00MB
+[2025-05-15 12:46:51] PERF: Gerenciamento de cache para modelo FaceLandmark478 - Tempo: 0.1225s | RAM delta: 0.00MB | VRAM delta: 0.00MB
+[2025-05-15 12:46:51] PERF: Carregamento efetivo do modelo FaceLandmark478 - Tempo: 0.0496s | RAM delta: 9.04MB | VRAM delta: 0.00MB
+[2025-05-15 12:46:51] GPU Memory [Após carregar modelo FaceLandmark478] - Allocated: 30.72MB, Reserved: 64.00MB
+[2025-05-15 12:46:51] GPU Memory [Antes de carregar modelo FaceBlendShapes] - Allocated: 30.72MB, Reserved: 64.00MB
+[2025-05-15 12:46:52] PERF: Gerenciamento de cache para modelo FaceBlendShapes - Tempo: 0.1215s | RAM delta: 0.00MB | VRAM delta: 0.00MB
+[2025-05-15 12:46:52] PERF: Carregamento efetivo do modelo FaceBlendShapes - Tempo: 0.0320s | RAM delta: 3.98MB | VRAM delta: 0.00MB
+[2025-05-15 12:46:52] GPU Memory [Após carregar modelo FaceBlendShapes] - Allocated: 30.72MB, Reserved: 64.00MB
+[2025-05-15 12:46:54] MONITOR: RAM: 3183.27MB | VRAM: 17.25MB / 12287.38MB

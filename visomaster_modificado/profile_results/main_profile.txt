@@ -1,0 +1,108 @@
+         2135 function calls (1972 primitive calls) in 55.939 seconds
+
+   Ordered by: cumulative time
+   List reduced from 289 to 100 due to restriction <100>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000   55.939   55.939 D:\visiovox-fusion-platform\visomaster_modificado\app\ui\main_ui.py:1444(__init__)
+        1    0.000    0.000   55.590   55.590 D:\visiovox-fusion-platform\visomaster_modificado\app\ui\main_ui.py:1583(initialize_variables)
+        1    0.000    0.000   55.589   55.589 D:\visiovox-fusion-platform\visomaster_modificado\app\processors\models_processor.py:55(__init__)
+        1    0.000    0.000   55.331   55.331 D:\visiovox-fusion-platform\visomaster_modificado\app\helpers\profiler.py:81(wrapper)
+        1   55.331   55.331   55.331   55.331 {method 'enable' of '_lsprof.Profiler' objects}
+        1    0.000    0.000    0.257    0.257 D:\visiovox-fusion-platform\visomaster_modificado\app\processors\face_editors.py:20(__init__)
+        1    0.066    0.066    0.257    0.257 D:\visiovox-fusion-platform\visomaster_modificado\app\processors\utils\faceutil.py:1356(create_faded_inner_mask)
+        1    0.016    0.016    0.240    0.240 D:\visiovox-fusion-platform\visomaster_modificado\app\ui\core\main_window.py:25(setupUi)
+        4    0.213    0.053    0.213    0.053 {method 'addTab' of 'PySide6.QtWidgets.QTabWidget' objects}
+        1    0.000    0.000    0.157    0.157 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\torchvision\transforms\functional.py:1318(gaussian_blur)
+        1    0.000    0.000    0.157    0.157 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\torchvision\transforms\_functional_tensor.py:744(gaussian_blur)
+        1    0.000    0.000    0.109    0.109 D:\visiovox-fusion-platform\visomaster_modificado\app\ui\main_ui.py:1757(load_config)
+        2    0.000    0.000    0.108    0.054 C:\Users\miche\.conda\envs\visomaster\lib\pathlib.py:1092(stat)
+        2    0.108    0.054    0.108    0.054 {built-in method nt.stat}
+        1    0.000    0.000    0.108    0.108 C:\Users\miche\.conda\envs\visomaster\lib\pathlib.py:1285(exists)
+        1    0.000    0.000    0.091    0.091 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\torchvision\transforms\_functional_tensor.py:735(_get_gaussian_kernel2d)
+        1    0.065    0.065    0.065    0.065 {built-in method torch.conv2d}
+        1    0.061    0.061    0.061    0.061 {built-in method torch.mm}
+        2    0.004    0.002    0.030    0.015 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\torchvision\transforms\_functional_tensor.py:725(_get_gaussian_kernel1d)
+        1    0.023    0.023    0.023    0.023 {built-in method torch.zeros}
+        2    0.011    0.005    0.011    0.005 {method 'pow' of 'torch._C.TensorBase' objects}
+        2    0.008    0.004    0.008    0.004 {built-in method torch.exp}
+        3    0.008    0.003    0.008    0.003 {built-in method torch.minimum}
+       16    0.007    0.000    0.007    0.000 {method 'addFile' of 'PySide6.QtGui.QIcon' objects}
+        2    0.007    0.003    0.007    0.003 {method 'sum' of 'torch._C.TensorBase' objects}
+        2    0.002    0.001    0.002    0.001 {built-in method torch.arange}
+        2    0.002    0.001    0.002    0.001 {method 'setWidget' of 'PySide6.QtWidgets.QDockWidget' objects}
+        1    0.000    0.000    0.001    0.001 D:\visiovox-fusion-platform\visomaster_modificado\app\ui\widgets\progress_dialog.py:20(__init__)
+        1    0.000    0.000    0.001    0.001 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\torch\nn\functional.py:4478(pad)
+        1    0.001    0.001    0.001    0.001 {built-in method torch._C._nn.pad}
+        2    0.000    0.000    0.000    0.000 {method 'setFeatures' of 'PySide6.QtWidgets.QDockWidget' objects}
+        1    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\contextlib.py:130(__enter__)
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.next}
+        1    0.000    0.000    0.000    0.000 D:\visiovox-fusion-platform\visomaster_modificado\app\helpers\profiler.py:45(measure_time)
+        1    0.000    0.000    0.000    0.000 D:\visiovox-fusion-platform\visomaster_modificado\app\helpers\profiler.py:23(get_memory_usage)
+        1    0.000    0.000    0.000    0.000 D:\visiovox-fusion-platform\visomaster_modificado\app\ui\core\main_window.py:545(retranslateUi)
+       51    0.000    0.000    0.000    0.000 {method 'addWidget' of 'PySide6.QtWidgets.QBoxLayout' objects}
+        3    0.000    0.000    0.000    0.000 {method 'setStyleSheet' of 'PySide6.QtWidgets.QWidget' objects}
+        1    0.000    0.000    0.000    0.000 D:\visiovox-fusion-platform\visomaster_modificado\app\processors\face_editors.py:28(load_lip_array)
+        1    0.000    0.000    0.000    0.000 D:\visiovox-fusion-platform\visomaster_modificado\app\processors\video_processor.py:134(__init__)
+       10    0.000    0.000    0.000    0.000 {method 'addLayout' of 'PySide6.QtWidgets.QBoxLayout' objects}
+       12    0.000    0.000    0.000    0.000 {method 'connect' of 'PySide6.QtCore.SignalInstance' objects}
+        3    0.000    0.000    0.000    0.000 D:\visiovox-fusion-platform\visomaster_modificado\app\ui\widgets\progress_dialog.py:98(tr_text)
+        1    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\torch\cuda\memory.py:377(memory_allocated)
+        1    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\torch\cuda\memory.py:173(memory_stats)
+        3    0.000    0.000    0.000    0.000 D:\visiovox-fusion-platform\visomaster_modificado\app\ui\main_ui.py:1464(tr)
+        2    0.000    0.000    0.000    0.000 {built-in method io.open}
+        2    0.000    0.000    0.000    0.000 {built-in method torch.linspace}
+        3    0.000    0.000    0.000    0.000 {built-in method builtins.print}
+        6    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\enum.py:359(__call__)
+        6    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\enum.py:678(__new__)
+        2    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\torch\_tensor.py:35(wrapped)
+        2    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\torch\_tensor.py:960(__rsub__)
+        1    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\torch\functional.py:404(meshgrid)
+        1    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\torch\functional.py:501(_meshgrid)
+        2    0.000    0.000    0.000    0.000 {built-in method torch.rsub}
+        2    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\enum.py:980(__or__)
+    161/1    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\torch\cuda\memory.py:262(_recurse_add_to_result)
+        1    0.000    0.000    0.000    0.000 {method 'setMenuBar' of 'PySide6.QtWidgets.QMainWindow' objects}
+        3    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\enum.py:1026(_decompose)
+        1    0.000    0.000    0.000    0.000 {built-in method _pickle.load}
+        1    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\pathlib.py:1316(is_file)
+        2    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\enum.py:937(_missing_)
+        2    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\enum.py:947(_create_pseudo_member_)
+        1    0.000    0.000    0.000    0.000 {built-in method torch.meshgrid}
+        1    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\json\__init__.py:274(load)
+      166    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\types.py:176(__get__)
+        6    0.000    0.000    0.000    0.000 {method 'setChecked' of 'PySide6.QtWidgets.QAbstractButton' objects}
+       21    0.000    0.000    0.000    0.000 {method 'setFlat' of 'PySide6.QtWidgets.QPushButton' objects}
+        3    0.000    0.000    0.000    0.000 D:\visiovox-fusion-platform\visomaster_modificado\app\ui\widgets\ui_workers.py:222(__init__)
+      109    0.000    0.000    0.000    0.000 {method 'setObjectName' of 'PySide6.QtCore.QObject' objects}
+        1    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\psutil\__init__.py:318(__init__)
+        1    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\psutil\__init__.py:321(_init)
+        4    0.000    0.000    0.000    0.000 {method 'setWindowTitle' of 'PySide6.QtWidgets.QWidget' objects}
+        6    0.000    0.000    0.000    0.000 {method 'addLayout' of 'PySide6.QtWidgets.QGridLayout' objects}
+        1    0.000    0.000    0.000    0.000 {method 'read' of '_io.TextIOWrapper' objects}
+        2    0.000    0.000    0.000    0.000 {method 'setFont' of 'PySide6.QtWidgets.QWidget' objects}
+        1    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\torchvision\transforms\v2\_misc.py:154(__init__)
+        1    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\pathlib.py:995(home)
+        3    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\pathlib.py:589(_from_parts)
+        3    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\queue.py:34(__init__)
+        1    0.000    0.000    0.000    0.000 {built-in method connectSlotsByName}
+        2    0.000    0.000    0.000    0.000 {method 'addDockWidget' of 'PySide6.QtWidgets.QMainWindow' objects}
+        2    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\enum.py:908(__or__)
+        1    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\torch\cuda\memory.py:278(memory_stats_as_nested_dict)
+       11    0.000    0.000    0.000    0.000 {method 'addAction' of 'PySide6.QtWidgets.QMenu' objects}
+        2    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\pathlib.py:957(__new__)
+        1    0.000    0.000    0.000    0.000 {built-in method torch.empty}
+        3    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\pathlib.py:569(_parse_args)
+        1    0.000    0.000    0.000    0.000 {method 'setReadOnly' of 'PySide6.QtWidgets.QLineEdit' objects}
+       60    0.000    0.000    0.000    0.000 {built-in method translate}
+        2    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\threading.py:90(RLock)
+       29    0.000    0.000    0.000    0.000 {method 'setText' of 'PySide6.QtWidgets.QAbstractButton' objects}
+        8    0.000    0.000    0.000    0.000 {method 'addItem' of 'PySide6.QtWidgets.QBoxLayout' objects}
+        2    0.000    0.000    0.000    0.000 {method '__exit__' of '_io._IOBase' objects}
+        1    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\pathlib.py:1432(expanduser)
+       11    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\threading.py:236(__init__)
+        1    0.000    0.000    0.000    0.000 {method 'expand' of 'torch._C.TensorBase' objects}
+        1    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\enum.py:838(_missing_)
+        1    0.000    0.000    0.000    0.000 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\torchvision\transforms\v2\_transform.py:23(__init__)
+
+

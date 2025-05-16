@@ -1,0 +1,289 @@
+Arquitetura de API distribuída (FastAPI, Celery, Redis, Workers)
+
+# Documento de Arquitetura: VisioVox Fusion Platform
+
+**Versão:** 1.5 (Atualizado em 13 de maio de 2025)
+**Autores:** [Seu Nome/Nome da Equipe], Gemini (Arquiteto IA)
+
+## Sumário Executivo
+
+A VisioVox Fusion Platform é um sistema avançado de Inteligência Artificial multimodal projetado para manipulação facial e vocal em tempo real e offline. Esta arquitetura visa modularidade, robustez, alto desempenho e implantação flexível, suportando tanto uso local (Windows/Linux desktop) quanto uma API de servidor escalável. Este documento detalha a arquitetura conceitual, funcional, a estrutura de diretórios e a estratégia de desenvolvimento, incorporando mecanismos de download de modelos sob demanda e uma arquitetura distribuída para a API de servidor.
+
+Este é um projeto colaborativo. A fase atual foca na validação do pipeline mínimo viável e, em seguida, na implementação de funcionalidades chave como download de modelos e a API distribuída.
+
+---
+
+**PARTE 1: ARQUITETURA CONCEITUAL E FUNCIONAL**
+
+**I. Introdução à Arquitetura Proposta**
+
+A "VisioVox Fusion Platform" foi concebida para ser uma solução de vanguarda em IA multimodal. O design prioriza:
+
+* **Modularidade:** Facilitar o desenvolvimento, teste, manutenção e a integração progressiva de funcionalidades.
+* **Desempenho:** Otimização para diversas configurações de hardware, incluindo GPUs de baixo custo, através de técnicas como ONNX, TensorRT e quantização.
+* **Flexibilidade de Implantação:** Suporte a instalação local em Windows e Linux (aplicativo desktop ou CLI) e uma API Web robusta e escalável para consumo por outras plataformas.
+* **Usabilidade:** Interface de seleção de modelos intuitiva e, para a API, gerenciamento eficiente de recursos, incluindo download sob demanda de modelos.
+
+Este documento evolui o design inicial para formalizar duas arquiteturas de implantação principais e um sistema robusto de gerenciamento de modelos.
+
+**II. Arquitetura Geral do Sistema**
+
+O sistema VisioVox é composto por módulos interconectados, orquestrados por um núcleo (`core`) que gerencia o fluxo de dados, configurações e recursos.
+
+* **A. Visão Geral e Diagramas Conceituais:**
+
+    1.  **Arquitetura de Implantação Local/Desktop (Monolítica):**
+        * Neste modo, a aplicação roda como um processo único. Ideal para uso interativo, desenvolvimento e tarefas offline.
+        * *Diagrama Conceitual (Local):* `[Interface Usuário (GUI/CLI)] <-> [Core Orchestrator] <-> [Módulos Funcionais (Media Ingestion, Scene Analysis, Facial/Voice Processing, etc., todos no mesmo processo)]`
+        * O `ResourceManager` neste modo pode interagir com um `ModelDownloadManager` para buscar modelos necessários que não estão presentes localmente.
+
+    2.  **Arquitetura de Implantação de API (Servidor Distribuído):**
+        * Projetada para escalabilidade e processamento assíncrono de tarefas pesadas.
+        * *Diagrama Conceitual (API Distribuída):*
+            ```
+            [Clientes HTTP] -> [Load Balancer (Opcional)] -> [API Gateway (FastAPI - Múltiplas Instâncias)]
+                                                                  |
+                                                                  v
+                                               [Message Broker (Redis/RabbitMQ)]
+                                                  ^               |
+                                                  | (Resultados)  v (Tarefas)
+            [Banco de Dados/Cache (Redis)] <-> [Workers (Celery - Múltiplas Instâncias, c/ acesso a GPUs)]
+                                                                  |
+                                                                  v
+                                                    [Core Orchestrator & Módulos Funcionais]
+                                                                  | (Acesso a Modelos)
+                                                                  v
+                                          [Sistema de Arquivos Compartilhado/Storage p/ Modelos (com ModelDownloadManager)]
+            ```
+
+* **B. Princípios de Design:**
+    1.  **Modularidade:** Componentes independentes com interfaces claras.
+    2.  **Abstração:** Ocultar complexidade interna dos módulos.
+    3.  **Escalabilidade:**
+        * Local: Adição de novos modelos e funcionalidades.
+        * API: Adição de mais workers e instâncias da API.
+    4.  **Configurabilidade:** Uso extensivo de arquivos `YAML` para parâmetros.
+    5.  **Reusabilidade:** Componentes e utilitários centralizados.
+    6.  **Desempenho Otimizado:** Foco em inferência rápida e uso eficiente de recursos.
+    7.  **Tolerância a Falhas (API):** Workers podem falhar e reiniciar sem derrubar a API; tarefas podem ser reprocessadas.
+
+* **C. Fluxo de Dados Geral:**
+
+    1.  **Modo Local:**
+        * Entrada (imagem, vídeo, áudio, stream de câmera/microfone) via GUI ou CLI.
+        * `Core Orchestrator` gerencia o pipeline: `Media Ingestion` -> `Scene Analysis` -> `Facial/Voice Processing` (com modelos obtidos/baixados pelo `Model Management`) -> `Multimodal Sync` -> Saída.
+
+    2.  **Modo API (Exemplo: Processamento de Vídeo):**
+        * Cliente envia requisição HTTP (ex: upload de vídeo e parâmetros de processamento) para a API FastAPI.
+        * API FastAPI valida a requisição, autentica (se necessário) e cria uma tarefa (ex: `process_video_task`) com os dados da requisição.
+        * A tarefa é enviada para o Message Broker (Redis).
+        * Um Worker Celery disponível pega a tarefa da fila.
+        * O Worker executa a lógica do `Core Orchestrator` (que pode envolver download de modelos, se necessário) para processar o vídeo.
+        * O resultado (ex: vídeo processado, status) pode ser armazenado e/ou o cliente notificado (via webhook, polling de status, etc.).
+        * Para operações de *streaming ao vivo* (como `DeepFaceLive` ou `RVC` ao vivo), a arquitetura pode envolver WebSockets gerenciados pela API, com workers especializados processando frames/áudio em tempo real e, possivelmente, usando Redis para comunicação de estado de baixa latência.
+
+* **D. Pilha Tecnológica Proposta:**
+    * **Linguagem Principal:** Python 3.9+
+    * **Framework de IA:** PyTorch (para flexibilidade e conversão ONNX)
+    * **Runtime de Inferência:** ONNX Runtime (portabilidade, CPU/GPU), TensorRT (otimização NVIDIA)
+    * **API Web (Servidor):** FastAPI (moderno, alto desempenho, async)
+    * **Servidor ASGI (Servidor):** Uvicorn, Hypercorn
+    * **Sistema de Fila de Tarefas (Servidor):** Celery
+    * **Message Broker (Servidor):** Redis (também para cache, pub/sub) ou RabbitMQ
+    * **Interface Gráfica Desktop (Local):** PyQt6 ou CustomTkinter
+    * **Processamento de Mídia:** OpenCV, FFmpeg (via `ffmpeg-python`), GStreamer (para pipelines complexos ao vivo)
+    * **Gerenciamento de Pacotes:** Poetry ou Conda + pip
+    * **Conteinerização (Servidor):** Docker, Docker Compose
+    * **Orquestração de Containers (Produção Servidor - Opcional Avançado):** Kubernetes
+
+**III. Módulos Funcionais Principais Detalhados**
+
+(Os módulos 1-8 e 10 permanecem como descritos anteriormente na fase de design inicial, com atualizações notáveis abaixo.)
+
+1.  **Core (`src/visiovox/core/`)**: `Orchestrator`, `ConfigManager`, `LoggerSetup`, `ResourceManager`.
+    * O `ResourceManager` será aprimorado para interagir com o `ModelDownloadManager`.
+
+2.  **Entrada de Mídia (`src/modules/media_ingestion/`)**
+3.  **Análise de Cena (`src/modules/scene_analysis/`)**: Detecção de face (YOLO-Face, YOLOv8, etc.), landmarks, segmentação (SAM2, XSeg).
+4.  **Processamento Facial (`src/modules/facial_processing/`)**: Troca de face (InSwapper, modelos `.dfm` de DeepFaceLab), aprimoramento (GFPGAN, CodeFormer), edição.
+5.  **Processamento Vocal (`src/modules/voice_processing/`)**: Conversão de voz (RVC-Project).
+6.  **Geração Visual Avançada (`src/modules/visual_generation/`)**: StyleGANEX.
+7.  **Sincronização Multimodal e Labial (`src/modules/multimodal_sync/`)**: LatentSync.
+8.  **Processamento Ao Vivo (`src/modules/live_stream/`)**: Coordenação de DeepFaceLive e RVC em tempo real.
+
+9.  **Gerenciamento de Modelos (`src/modules/model_management/`)**
+    * **Descrição:** Responsável pelo ciclo de vida completo dos modelos de IA, incluindo download sob demanda, verificação, cache local e carregamento para inferência.
+    * **Subcomponentes Chave:**
+        * `ModelDownloadManager` (novo, pode ser em `utils/` ou aqui):
+            * Lógica para baixar arquivos de URLs (HTTP/S, Hugging Face Hub, etc.).
+            * Verificação de hash (MD5, SHA256) para integridade do arquivo baixado.
+            * Gerenciamento de múltiplos provedores/mirrors para um modelo.
+            * Barra de progresso para downloads (CLI/GUI).
+            * Inspirado em `download.py` do [FaceFusion](https://github.com/facefusion/facefusion).
+        * Interface com `core.ResourceManager`: O `ResourceManager`, ao receber um pedido para `load_model`, primeiro verificará o cache local. Se o modelo não estiver presente ou desatualizado (baseado em alguma política), ele invocará o `ModelDownloadManager`.
+        * Configuração de Modelos: `configs/default_config.yaml` (ou um arquivo de manifesto de modelos dedicado, ex: `models.json`) conterá metadados para cada modelo, incluindo:
+            * URLs de download (primária, secundárias).
+            * Hash esperado do arquivo.
+            * Tamanho do arquivo (para informação).
+            * Caminho de armazenamento local relativo.
+            * Licença do modelo (informativo).
+        * Carregadores Específicos: Conforme já planejado, para formatos `.onnx`, `.dfm`, `.pth`.
+    * **Modelos/Ferramentas Chave:** `requests`, `huggingface_hub` (biblioteca Python), `tqdm` (para progresso).
+
+10. **Interfaces de Usuário (`src/apis/`, `src/cli/`, `src/gui/`)**: API FastAPI, CLI (Typer/Click), GUI Desktop.
+
+11. **Componentes da Arquitetura Distribuída (Novos para API Servidor):**
+    * **API Gateway (`src/visiovox/apis/`)**:
+        * **Descrição:** Ponto de entrada para todas as requisições externas. Construído com FastAPI.
+        * **Funcionalidades:** Roteamento de requisições, validação de dados de entrada (Pydantic), autenticação/autorização, serialização de respostas. Para tarefas longas, enfileira no Celery e retorna um ID de tarefa. Pode oferecer endpoints para polling de status da tarefa. Suporte a WebSockets para interações em tempo real (live).
+    * **Fila de Tarefas e Broker (`celery_app.py`, Configuração Redis):**
+        * **Descrição:** Celery configurado com Redis como broker e backend de resultados.
+        * **Funcionalidades:** Gerencia a distribuição de tarefas de processamento de IA para os Workers. Permite o desacoplamento entre a API e o processamento intensivo.
+        * Tarefas Celery (`src/visiovox/tasks/` ou dentro dos módulos relevantes): Funções Python que encapsulam chamadas ao `Orchestrator` ou a partes específicas da lógica de processamento.
+    * **Workers (Processos Celery):**
+        * **Descrição:** Processos Python independentes que executam as tarefas Celery. Cada worker carrega a aplicação VisioVox (ou partes dela), incluindo `Orchestrator` e módulos.
+        * **Funcionalidades:** Consomem tarefas da fila, executam o processamento (utilizando GPUs se disponíveis), e reportam resultados/status via Celery backend. Podem ser escalados independentemente da API.
+
+**IV. Interações e Dependências dos Módulos (Atualizado)**
+
+* **Modo Local:** `Core Orchestrator` invoca módulos sequencialmente. `ResourceManager` usa `ModelDownloadManager` se um modelo não estiver localmente.
+* **Modo API:**
+    * `FastAPI` recebe requisição -> Envia tarefa para `Celery` (via `Redis`).
+    * `Celery Worker` pega tarefa -> Usa `Orchestrator`.
+    * `Orchestrator` usa `ResourceManager` -> que usa `ModelDownloadManager` (se necessário) -> que acessa storage de modelos.
+    * `Orchestrator` usa outros módulos (`MediaIngestion`, `FacialProcessing`, etc.).
+    * Worker retorna resultado para `Celery Backend` (Redis).
+    * `FastAPI` pode consultar status/resultado no backend ou o cliente pode fazer polling.
+
+**V. Estratégia de Otimização e Implantação (Atualizado)**
+
+* **A. Otimização de Desempenho:** (ONNX, TensorRT, quantização, batch processing, gerenciamento de VRAM, multithreading/asyncio) – Mantido.
+* **B. Implantação da API Web (Servidor Linux - Distribuído):**
+    * **Conteinerização:** `Dockerfile` para a aplicação FastAPI, `Dockerfile` para os Workers Celery. Imagem oficial do Redis.
+    * **Orquestração (Desenvolvimento/Teste):** `docker-compose.yml` para gerenciar a API, workers, Redis, e volumes para modelos/dados.
+    * **Servidor ASGI:** Uvicorn/Hypercorn rodando dentro do container da API FastAPI.
+    * **Proxy Reverso:** Nginx ou Traefik na frente da API FastAPI para terminação SSL, load balancing entre instâncias da API, servir arquivos estáticos.
+    * **Escalabilidade:** Workers Celery podem ser escalados horizontalmente (`celery -A visiovox.celery_app worker -c NUM_WORKERS`). Múltiplas instâncias da API FastAPI podem rodar atrás de um load balancer.
+    * **Gerenciamento de Modelos:** Modelos baixados podem ser armazenados em um volume Docker persistente ou em um sistema de arquivos de rede acessível por todos os workers.
+* **C. Instalação Local (Windows):** (PyInstaller/Nuitka, Instalador NSIS/Inno Setup) – Mantido. O `ModelDownloadManager` será crucial aqui também.
+* **D. Operação em Linux (Local/Desktop):** (Scripts de setup, GUI nativa) – Mantido.
+* **E. Considerações de Implantação Multiplataforma (Gerenciamento de Dependências de Projetos Externos):** (Wrappers para DeepFaceLab, RVC) – Mantido.
+
+**VI. Interface de Seleção de Modelos ("Processador Facial")** – Mantido.
+
+---
+
+**PARTE 2: ESTRUTURA DE DIRETÓRIOS E ARQUIVOS DETALHADA (Com Adições)**
+
+visiovox-fusion-platform/
+├── .github/
+│   └── workflows/
+│       ├── ci_pipeline.yml
+│       └── cd_pipeline_api.yml
+├── .vscode/
+├── assets/
+├── configs/
+│   ├── default_config.yaml
+│   ├── logging_config.yaml
+│   └── model_manifest.json (Opcional, para metadados de download de modelos)
+├── data/
+│   ├── input/
+│   ├── output/
+│   └── trained_models/ # Modelos treinados pelo usuário
+├── docs/
+│   └── architecture.md (Este arquivo)
+├── logs/
+├── models/ # Cache local de modelos pré-treinados baixados
+│   ├── face_detection/
+│   └── ... (outros tipos de modelo)
+├── notebooks/
+├── scripts/
+│   ├── download_models.py (Pode ser parte do ModelDownloadManager ou um script utilitário)
+│   └── ...
+├── src/
+│   └── visiovox/
+│       ├── init.py
+│       ├── apis/ # Lógica da API FastAPI
+│       │   ├── init.py
+│       │   ├── main_api.py       # Ponto de entrada da API FastAPI
+│       │   ├── routers/          # Endpoints da API (ex: process_video.py)
+│       │   │   └── ...
+│       │   └── schemas.py        # Modelos Pydantic para requisição/resposta
+│       ├── cli/
+│       ├── core/
+│       │   ├── init.py
+│       │   ├── orchestrator.py
+│       │   ├── config_manager.py
+│       │   ├── logger_setup.py
+│       │   └── resource_manager.py # Interage com ModelDownloadManager
+│       ├── gui/
+│       ├── modules/
+│       │   ├── init.py
+│       │   ├── media_ingestion/
+│       │   ├── scene_analysis/
+│       │   ├── facial_processing/
+│       │   ├── voice_processing/
+│       │   ├── visual_generation/
+│       │   ├── multimodal_sync/
+│       │   ├── live_stream/
+│       │   └── model_management/ # Pode abrigar ModelDownloadManager ou lógica relacionada
+│       │       └── download_utils.py # Funções auxiliares para download
+│       ├── tasks/ # Definições de tarefas Celery
+│       │   ├── init.py
+│       │   └── video_tasks.py
+│       ├── utils/ # Utilitários gerais, pode incluir ModelDownloadManager se for genérico
+│       │   └── model_downloader.py # (Exemplo de localização para ModelDownloadManager)
+│       ├── celery_app.py         # Configuração da aplicação Celery
+│       └── main.py               # Ponto de entrada para CLI/GUI local
+├── tests/
+├── .dockerignore
+├── .gitignore
+├── Dockerfile_api            # Para a API FastAPI
+├── Dockerfile_worker         # Para os Workers Celery
+├── docker-compose.yml        # Para desenvolvimento/teste da arquitetura distribuída
+├── LICENSE
+├── pyproject.toml            # Para Poetry (ou requirements.txt)
+└── README.md
+
+* **Novidades na Estrutura:**
+    * `configs/model_manifest.json` (Opcional): Para centralizar URLs/hashes de modelos se não estiverem em `default_config.yaml`.
+    * `models/`: Agora explicitamente como cache local de modelos baixados.
+    * `src/visiovox/apis/`: Dedicado à lógica da API FastAPI.
+    * `src/visiovox/tasks/`: Para definições de tarefas Celery.
+    * `src/visiovox/utils/model_downloader.py` (ou em `modules/model_management/`): Para o `ModelDownloadManager`.
+    * `src/visiovox/celery_app.py`: Ponto de entrada e configuração da aplicação Celery.
+    * `Dockerfile_api`, `Dockerfile_worker`, `docker-compose.yml`: Para a implantação distribuída.
+* `requirements.txt` ou `pyproject.toml` precisará incluir: `fastapi`, `uvicorn[standard]`, `celery`, `redis`, `requests`, `huggingface_hub`, `tqdm`, além das já existentes (`PyYAML`, `opencv-python`, `numpy`, `onnxruntime`).
+
+---
+
+**PARTE 3: ESTRATÉGIA DE DESENVOLVIMENTO E PRÓXIMOS PASSOS**
+
+* **A. Confirmação da Abordagem Colaborativa e Iterativa:**
+    * Mantemos o desenvolvimento incremental, com sprints por módulo/funcionalidade, revisões de código e comunicação constante.
+
+* **B. Foco Imediato (Pós-Aprovação desta Arquitetura Atualizada):**
+    1.  **Teste do Pipeline Mínimo Viável (Monolítico):** Concluir os preparativos (imagem de teste, modelo ONNX local, ambiente com dependências) e executar o `src/visiovox/main.py` para validar a interação `MediaLoader` -> `Orchestrator` -> `FaceDetector`.
+    2.  **Implementação do Sistema de Download de Modelos:**
+        * Definir a estrutura de metadados dos modelos (URLs, hashes) em `default_config.yaml` ou `model_manifest.json`.
+        * Implementar o `ModelDownloadManager` (em `utils` ou `model_management`).
+        * Integrar o `ModelDownloadManager` com o `core.ResourceManager` para que `load_model` possa baixar modelos automaticamente.
+
+* **C. Fases Subsequentes de Desenvolvimento (Visão Geral):**
+    1.  **Desenvolvimento da API FastAPI:**
+        * Endpoints iniciais para funcionalidades chave (ex: processar imagem/vídeo). Inicialmente, pode-se usar processamento síncrono ou em threads dentro da API para validação.
+    2.  **Integração de Celery e Redis:**
+        * Configurar `celery_app.py` e definir as primeiras tarefas Celery (ex: `process_video_task`).
+        * Refatorar os endpoints da API FastAPI para enfileirar tarefas demoradas no Celery.
+        * Implementar os Workers Celery que executam essas tarefas usando o `Orchestrator`.
+    3.  **Implementação dos Módulos de IA Avançados:** Continuar o desenvolvimento e integração dos módulos de processamento facial (`.dfm`, `StyleGANEX`), vocal (`RVC`), sincronização labial (`LatentSync`), e processamento ao vivo.
+    4.  **Desenvolvimento da GUI Desktop:** Construir a interface gráfica para a aplicação local.
+    5.  **Otimizações e Melhorias Contínuas:** Refinamento de desempenho (TensorRT), robustez, experiência do usuário, documentação.
+
+* **D. Metodologia de Trabalho Sugerida:** (Sprints curtos por módulo/funcionalidade, definição de requisitos detalhados, desenvolvimento, revisões de código, testes) – Mantido.
+
+---
+
+Este documento de arquitetura atualizado reflete uma visão mais completa e escalável para a "VisioVox Fusion Platform". Ele estabelece uma base sólida tanto para a aplicação local quanto para uma poderosa API de servidor.
+
+

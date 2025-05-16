@@ -1,0 +1,55 @@
+# Versão do schema de configuração de logging. Atualmente é 1.
+version: 1
+
+# Se 'true', todos os loggers existentes são desabilitados.
+# Geralmente 'false' para permitir que bibliotecas de terceiros configurem seus próprios loggers.
+disable_existing_loggers: false
+
+# Define os formatos das mensagens de log.
+formatters:
+  simple:
+    format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    datefmt: "%Y-%m-%d %H:%M:%S"
+  detailed:
+    format: "%(asctime)s - %(levelname)-8s - %(name)-25s - %(module)-15s:%(lineno)-4d - %(message)s"
+    datefmt: "%Y-%m-%d %H:%M:%S"
+
+# Define os handlers, que determinam para onde as mensagens de log são enviadas.
+handlers:
+  console:
+    class: logging.StreamHandler  # Envia logs para o console (stderr por padrão, aqui stdout).
+    level: DEBUG                  # Nível mínimo para este handler.
+    formatter: simple             # Usa o formato 'simple'.
+    stream: ext://sys.stdout      # Envia para a saída padrão (ao invés de stderr).
+  
+  file_handler:
+    class: logging.handlers.RotatingFileHandler # Logs para um arquivo, com rotação.
+    level: DEBUG                                # Nível mínimo para este handler.
+    formatter: detailed                         # Usa o formato 'detailed'.
+    filename: "logs/visiovox_app.log"           # Caminho do arquivo de log (relativo à raiz do projeto).
+                                                # O diretório 'logs/' deve existir.
+    maxBytes: 10485760                          # Tamanho máximo do arquivo antes da rotação (10MB).
+    backupCount: 5                              # Número de arquivos de backup a manter.
+    encoding: utf8                              # Codificação do arquivo de log.
+
+# Configuração para loggers específicos (nomeados).
+loggers:
+  visiovox: # Logger para todo o pacote 'visiovox'.
+    level: DEBUG                  # Nível mínimo para mensagens deste logger.
+    handlers: [console, file_handler] # Usa ambos os handlers.
+    propagate: no                 # Impede que mensagens sejam passadas para handlers do logger root.
+                                  # Útil se o root logger também tiver um file_handler, para evitar duplicidade.
+
+  # Exemplo de logger para uma biblioteca de terceiro, se precisar de tratamento especial:
+  # "some_library":
+  #   level: INFO
+  #   handlers: [console]
+  #   propagate: no
+
+# Configuração para o logger root (logger pai de todos os outros).
+# Captura logs de todas as fontes que não têm um logger nomeado específico configurado
+# ou cujos loggers nomeados têm 'propagate: true'.
+root:
+  level: INFO                     # Nível padrão para logs que chegam ao root.
+  handlers: [console]             # Por padrão, apenas logs de nível INFO ou superior de bibliotecas
+                                  # irão para o console, a menos que tenham seus próprios loggers definidos. 

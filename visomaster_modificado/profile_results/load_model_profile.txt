@@ -1,0 +1,28 @@
+         7672 function calls (5735 primitive calls) in 0.372 seconds
+
+   Ordered by: cumulative time
+   List reduced from 220 to 20 due to restriction <20>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.372    0.372 D:\visiovox-fusion-platform\visomaster_modificado\app\processors\models_processor.py:237(load_model)
+     14/9    0.000    0.000    0.213    0.024 {method 'emit' of 'PySide6.QtCore.SignalInstance' objects}
+        1    0.000    0.000    0.205    0.205 D:\visiovox-fusion-platform\visomaster_modificado\app\ui\widgets\progress_dialog.py:324(finish_loading)
+       12    0.205    0.017    0.205    0.017 {method 'acquire' of '_thread.lock' objects}
+        1    0.000    0.000    0.204    0.204 C:\Users\miche\.conda\envs\visomaster\lib\threading.py:1064(join)
+        2    0.000    0.000    0.204    0.102 C:\Users\miche\.conda\envs\visomaster\lib\threading.py:1102(_wait_for_tstate_lock)
+        1    0.000    0.000    0.122    0.122 D:\visiovox-fusion-platform\visomaster_modificado\app\processors\models_processor.py:221(_manage_cache_size)
+        3    0.000    0.000    0.122    0.041 D:\visiovox-fusion-platform\visomaster_modificado\app\processors\models_processor.py:158(_unload_model)
+        1    0.122    0.122    0.122    0.122 {built-in method gc.collect}
+        1    0.000    0.000    0.031    0.031 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\onnxruntime\capi\onnxruntime_inference_collection.py:404(__init__)
+        1    0.031    0.031    0.031    0.031 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\onnxruntime\capi\onnxruntime_inference_collection.py:482(_create_inference_session)
+        5    0.000    0.000    0.006    0.001 D:\visiovox-fusion-platform\visomaster_modificado\app\ui\widgets\progress_dialog.py:225(update_progress)
+     11/5    0.000    0.000    0.005    0.001 D:\visiovox-fusion-platform\visomaster_modificado\app\ui\widgets\progress_dialog.py:139(_perform_ui_update)
+     13/7    0.004    0.000    0.005    0.001 {built-in method processEvents}
+       12    0.000    0.000    0.003    0.000 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\torch\cuda\memory.py:173(memory_stats)
+        4    0.000    0.000    0.002    0.001 {built-in method builtins.next}
+        4    0.000    0.000    0.002    0.001 D:\visiovox-fusion-platform\visomaster_modificado\app\helpers\profiler.py:45(measure_time)
+        9    0.000    0.000    0.002    0.000 C:\Users\miche\.conda\envs\visomaster\lib\site-packages\torch\cuda\memory.py:377(memory_allocated)
+        1    0.000    0.000    0.002    0.002 D:\visiovox-fusion-platform\visomaster_modificado\app\ui\widgets\progress_dialog.py:181(start_loading)
+        2    0.000    0.000    0.002    0.001 C:\Users\miche\.conda\envs\visomaster\lib\contextlib.py:139(__exit__)
+
+

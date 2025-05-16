@@ -1,0 +1,1 @@
+# Pacote utilitário para gerenciar downloads de modelos ONNX e outros recursos similares 

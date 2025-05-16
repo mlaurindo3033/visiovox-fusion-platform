@@ -1,0 +1,63 @@
+project_name: "VisioVox Fusion Platform"
+version: "0.1.0"
+
+# Configurações para modelos de IA
+# Usado pelo ResourceManager para localizar modelos e pelo FaceDetector
+# para parâmetros específicos de pré/pós-processamento.
+models:
+  face_detection: # Chave para o 'model_type' usado em ResourceManager.load_model
+    yolo_default_onnx: # Chave para o 'model_name'
+      path: "models/face_detection/yolov8n-face.onnx" # Caminho relativo à raiz do projeto
+      # Parâmetros específicos do modelo YOLO, configuráveis aqui:
+      input_width: 640
+      input_height: 640
+      confidence_threshold: 0.5 # Limiar de confiança para detecções
+      iou_threshold: 0.45       # Limiar para Non-Maximum Suppression (NMS)
+      download_url: "https://example.com/path/to/yolov8n-face.onnx" # URL para download sob demanda
+      sha256_hash: "expected_sha256_hash_here"  # Hash SHA256 para verificação de integridade
+      # Adicionar outros parâmetros de pré/pós-processamento conforme necessário
+
+    # Exemplo de como outro modelo de detecção poderia ser adicionado:
+    # another_yolo_model:
+    #   path: "models/face_detection/another_yolo.onnx"
+    #   input_width: 320
+    #   input_height: 320
+    #   confidence_threshold: 0.6
+
+  # Outros tipos de modelos (ex: face_landmark, face_swap) seriam adicionados aqui
+  # face_landmark:
+  #   landmark_model_v1:
+  #     path: "models/face_landmark/2dfan4.onnx"
+
+# Caminhos de saída padrão para artefatos gerados
+# Usado pelo Orchestrator (RF7.2)
+output_paths:
+  detected_faces_image: "data/output/detected_faces.jpg" # Para a imagem com detecções
+  # Outros caminhos de saída podem ser adicionados aqui
+
+# Configurações gerais de logging (podem ser mais detalhadas em logging_config.yaml)
+# Esta seção pode ser usada para um fallback simples ou para configurações
+# que não se encaixam no schema do logging.config.dictConfig.
+logging:
+  # Nível de logging global para a aplicação, se não especificado de outra forma.
+  # O LoggerSetup usará principalmente o logging_config.yaml, mas pode consultar aqui
+  # para um default_level se o arquivo YAML falhar.
+  default_app_level: "INFO"
+
+# Nomes de modelo padrão a serem usados por diferentes módulos/orquestrador
+# Usado pelo Orchestrator (RF7.1) para carregar o modelo de detecção facial padrão.
+default_models:
+  face_detector: "yolo_default_onnx"
+  # Outros modelos padrão para diferentes tarefas podem ser definidos aqui:
+  # landmark_extractor: "landmark_model_v1"
+  face_enhancer: "gfpgan_1_4"
+  face_landmarker: "2dfan4"
+  face_recogniser: "arcface_w600k_r50" # Added for FaceRecogniser
+
+# Outras configurações globais da aplicação podem ser adicionadas abaixo:
+# exemplo_config_geral:
+#   parametro_x: "valor_y" 
+
+# Paths configuration
+paths:
+  # ... existing code ... 

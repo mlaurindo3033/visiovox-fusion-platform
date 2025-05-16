@@ -1,0 +1,69 @@
+# Remover torch, torchvision e torchaudio para instalar via Conda
+# Instale manualmente com:
+# conda install pytorch torchvision torchaudio pytorch-cuda=12.4 -c pytorch -c nvidia
+
+# Arquivo de dependências Python para a VisioVox Fusion Platform
+
+# Core dependencies para o pipeline mínimo viável
+PyYAML>=6.0.1
+opencv-python==4.10.0.84
+numpy==1.26.4
+onnxruntime-gpu==1.20.0
+scikit-image==0.21.0
+pytest>=7.0.0
+
+# Para suporte a GPU com ONNX Runtime (NVIDIA):
+# Se você tem uma GPU NVIDIA e CUDA configurado, você pode substituir 'onnxruntime' por 'onnxruntime-gpu'.
+# Descomente a linha abaixo e comente a linha 'onnxruntime' acima, ou instale manualmente.
+# onnxruntime-gpu>=1.15.1
+
+# --- Dependências para Fases Futuras (Arquitetura de API Distribuída e Download de Modelos) ---
+# Estas serão descomentadas e adicionadas conforme implementamos essas funcionalidades.
+
+# Para a API Web:
+# fastapi>=0.100.0
+# uvicorn[standard]>=0.22.0 # Servidor ASGI para FastAPI
+
+# Para Fila de Tarefas e Workers Assíncronos:
+# celery>=5.3.0
+# redis>=4.6.0 # Cliente Python para Redis (usado como broker e backend de resultados para Celery)
+# flower>=1.2.0 # (Opcional) Ferramenta de monitoramento para Celery
+
+# Para Download de Modelos:
+requests>=2.30.0
+tqdm
+ftfy
+regex
+pyvirtualcam==0.11.1
+numexpr
+onnxsim
+huggingface_hub>=0.16.0 # Se formos baixar modelos do Hugging Face Hub
+insightface
+
+# Outras bibliotecas que podem ser úteis:
+pillow==9.5.0 # Alternativa/complemento ao OpenCV para certas manipulações de imagem
+psutil==6.0.0 # Para obter informações do sistema (uso de CPU/memória)
+onnx==1.16.1
+protobuf==4.23.2
+packaging==24.1
+PySide6==6.8.2.1
+kornia
+tensorrt==10.6.0 --extra-index-url https://pypi.nvidia.com
+tensorrt-cu12_libs==10.6.0
+tensorrt-cu12_bindings==10.6.0
+pyqt-toast-notification==1.3.2
+qdarkstyle
+pyqtdarktheme
+
+# Dependências específicas do projeto
+PyYAML>=6.0.1
+pytest>=7.0.0
+
+# Outras bibliotecas opcionais:
+# fastapi>=0.100.0
+# uvicorn[standard]>=0.22.0
+# celery>=5.3.0
+# redis>=4.6.0
+# flower>=1.2.0
+
+# GPUtil>=1.4.0 # Para monitoramento de GPU NVIDIA. Instruções de Uso: 

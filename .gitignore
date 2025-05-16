@@ -1,0 +1,186 @@
+# Arquivo .gitignore Otimizado para o Projeto VisioVox Fusion Platform
+# VERSÃO SUPER REVISADA - Foco em bloquear os arquivos que causaram o push de 1.1GB
+
+# Arquivos e Pastas de Cache e Compilação do Python
+####################################################
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# Arquivos de Ambiente Virtual Python
+#####################################
+# venv/
+# .venv/
+# env/
+# .env # Cuidado com senhas!
+
+# Logs e Arquivos Temporários
+#############################
+logs/
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Arquivos de Sistema Operacional
+#################################
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Arquivos de IDEs e Editores
+#############################
+.idea/
+# .vscode/ # Comente se você NÃO compartilha settings.json ou launch.json
+           # Se quiser compartilhar, adicione exceções como abaixo, mas
+           # garanta que a pasta .vscode/ em si não está ignorada se tiver .gitkeep
+           # !.vscode/settings.json
+           # !.vscode/launch.json
+*.sublime-project
+*.sublime-workspace
+*.project
+.project
+.classpath
+.cproject
+*.creator
+nbproject/
+
+# Arquivos de Build e Distribuição
+##################################
+build/
+dist/
+*.egg-info/
+*.egg
+*.exe
+*.dll
+*.so
+*.o
+
+# Arquivos de Teste e Cobertura
+###############################
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+nosetests.xml
+coverage.xml
+
+# == ARQUIVOS E PASTAS GRANDES ESPECÍFICAS DO PROJETO - IGNORAR! ==
+####################################################################
+
+# Modelos na raiz do projeto (EX: o inswapper_128.onnx que apareceu no log)
+##########################################################################
+inswapper_128.onnx
+fan_68_5.onnx # Outro .onnx que apareceu no log na raiz
+
+# Pasta 'models' e seu conteúdo (se for só para modelos grandes)
+###############################################################
+models/
+# Se precisar de regras mais finas dentro de 'models/', use:
+# models/**/*.pt
+# models/**/*.onnx
+# models/**/*.zip
+# models/**/*.engine
+# models/face_detection/retinaface-R50.zip # Já coberto por 'models/' se a pasta inteira for ignorada
+
+# Arquivos e Pastas dentro de 'visomaster_modificado'
+#####################################################
+
+# Modelos dentro de visomaster_modificado/model_assets/
+# -----------------------------------------------------
+visomaster_modificado/model_assets/ # Ignora a pasta inteira e seu conteúdo
+# Se precisar ser mais específico (caso tenha algo pequeno lá dentro que precise ir):
+# visomaster_modificado/model_assets/sam2/sam2.1_l.pt
+# visomaster_modificado/model_assets/sam2/sam2.1_hiera_tiny.pt
+# visomaster_modificado/model_assets/sam2/sam2.1_s.pt
+# visomaster_modificado/model_assets/sam2/sam2.1_t.pt # Adicionado, pois apareceu no log
+# visomaster_modificado/model_assets/liveportrait_onnx/motion_extractor.onnx # Adicionado
+# visomaster_modificado/model_assets/liveportrait_onnx/warping_spade-fix.onnx # Adicionado
+# visomaster_modificado/model_assets/liveportrait_onnx/warping_spade.onnx # Adicionado
+# visomaster_modificado/model_assets/appearance_feature_extractor.onnx # Adicionado
+# visomaster_modificado/model_assets/rd64-uni-refined.pth # Adicionado
+# visomaster_modificado/model_assets/**/*.onnx # Pega ONNX em subpastas de model_assets
+# visomaster_modificado/model_assets/**/*.pt   # Pega PT em subpastas de model_assets
+# visomaster_modificado/model_assets/**/*.pth  # Pega PTH em subpastas de model_assets
+# visomaster_modificado/model_assets/**/*.pkl  # Pega PKL em subpastas de model_assets
+# visomaster_modificado/model_assets/dfm_models/*.dfm
+
+# Modelos dentro de visomaster_modificado/models/ (se esta pasta existir e tiver modelos)
+# --------------------------------------------------------------------------------------
+# visomaster_modificado/models/ # Ignora a pasta inteira
+# Ou especificamente:
+# visomaster_modificado/models/liveportrait_onnx/*.onnx
+# visomaster_modificado/models/liveportrait_onnx/*.trt
+
+# Pastas de dependências e outros
+# -------------------------------
+visomaster_modificado/dependencies/
+# A linha abaixo parece um erro de digitação, unifiquei com a de cima.
+# Se 'visomaster_modificadodependencies' for uma pasta real e separada, descomente e ajuste.
+# visomaster_modificadodependencies/CUDA/
+# visomaster_modificadodependencies/Python/
+# visomaster_modificadodependencies/git-portable/
+# visomaster_modificado/dependencies/TensorRT/ # Coberto por visomaster_modificado/dependencies/
+
+visomaster_modificado/Swatest/
+visomaster_modificado/testdata/
+
+# TensorRT engines e caches
+visomaster_modificado/tensorrt-engines/ # Ignora a pasta inteira
+# Ou mais especificamente:
+# visomaster_modificado/tensorrt-engines/**/*.engine
+# visomaster_modificado/tensorrt-engines/**/*.onnx
+# visomaster_modificado/tensorrt-engines/**/*.profile
+# visomaster_modificado/tensorrt-engines/**/*.timing
+
+# Pastas de output e dados gerados
+##################################
+source_videos/
+source_images/
+output/
+test_frames*/
+test_videos*/
+
+# Arquivos de configuração gerados localmente ou com dados sensíveis
+####################################################################
+# Cuidado com *.json genérico se algum JSON de configuração precisar ir!
+# Ex: !configs/minha_config_essencial.json
+# saved_parameters*.json
+# startup_parameters*.json
+# data.json # Se for um arquivo de dados grande ou gerado localmente
+visomaster_modificado/last_workspace.json # Pareceu grande no log
+visomaster_modificado/config.json # Se for gerado localmente
+
+# Arquivos diversos
+###################
+merged_embeddings*.txt
+install.dat
+# visomaster.ico # Se for artefato de build. Se for asset, não ignore.
+*.bat # Se forem scripts de execução local.
+
+# Arquivos de imagem/vídeo genéricos (CUIDADO!)
+#############################################
+# Descomente apenas se TODOS os arquivos desse tipo forem para não subir.
+# É melhor ignorar pastas específicas de output ou arquivos grandes individualmente.
+# *.mp4
+# *.jpg
+# *.png
+# *.jpeg
+# *.gif
+
+.thumbnails/
+
+# Arquivos binários grandes que apareceram no log (se não cobertos acima)
+#######################################################################
+# .../external/cliplib/bpe_simple_vocab_16e6.txt.gz # Se for grande e não essencial
+# .../app/ui/core/media_rc.py # Esse é um .py, mas o log mostrou como GIGANTE (292558 +++),
+                              # pode ser um arquivo gerado. Se for código fonte, NÃO ignore.
+                              # Se for gerado, adicione o caminho completo.
+
+# Arquivos de cache/build de ferramentas específicas (se não cobertos)
+#####################################################################
+# *.assets
+# *.caches
+# *.jobs

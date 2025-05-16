@@ -1,0 +1,12 @@
+{
+  "cache_format": "webp",
+  "cache_quality": 90,
+  "num_threads": 4,
+  "vram_limit": 4096,
+  "device": "Auto",
+  "idioma": "English",
+  "tema": "Claro",
+  "loglevel": "Debug",
+  "save_logs": true,
+  "output_dir": "C:\\Users\\miche"
+}
